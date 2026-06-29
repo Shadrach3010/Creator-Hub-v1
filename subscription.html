@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Content Creator Tracking System</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: { primary: "#2563EB", secondary: "#1E40AF" },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header/Navigation -->
+    <header class="sticky top-0 z-50 bg-white shadow-sm">
+      <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex items-center">
+            <div class="flex-shrink-0 flex items-center">
+              <img class="image" src="sab.jpeg" alt="SAB" />
+              <span class="text-xl font-bold text-gray-800"
+                >SL Creator Hub</span
+              >
+            </div>
+            <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+              <a
+                href="index.html"
+                class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium nav-link"
+                >Home</a
+              >
+              <a
+                href="about.html"
+                class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium nav-link"
+                >About</a
+              >
+              <a
+                href="blogs.html"
+                class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium nav-link"
+                >Blogs</a
+              >
+              <a
+                href="creators.html"
+                class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium nav-link"
+                >Creators</a
+              >
+              <a
+                href="subscription.html"
+                class="border-blue-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium nav-link"
+                >Subscription</a
+              >
+              <a
+                href="contact.html"
+                class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium nav-link"
+                >Contact</a
+              >
+            </div>
+          </div>
+          <div class="hidden sm:ml-6 sm:flex sm:items-center">
+            <a
+              href="login.html"
+              class="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium"
+              >Login</a
+            >
+            <a
+              href="register.html"
+              class="ml-4 bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700"
+              >Register</a
+            >
+          </div>
+          <div class="-mr-2 flex items-center sm:hidden">
+            <button
+              type="button"
+              class="mobile-menu-button inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+              aria-controls="mobile-menu"
+              aria-expanded="false"
+            >
+              <span class="sr-only">Open main menu</span>
+              <i class="fas fa-bars"></i>
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Mobile menu -->
+      <div class="mobile-menu hidden sm:hidden" id="mobile-menu">
+        <div class="pt-2 pb-3 space-y-1">
+          <a
+            href="index.html"
+            class="bg-blue-50 border-blue-500 text-blue-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium nav-link"
+            >Home</a
+          >
+          <a
+            href="about.html"
+            class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium nav-link"
+            >About</a
+          >
+          <a
+            href="blogs.html"
+            class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium nav-link"
+            >Blogs</a
+          >
+          <a
+            href="creators.html"
+            class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium nav-link"
+            >Creators</a
+          >
+          <a
+            href="subscription.html"
+            class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium nav-link"
+            >Subscription</a
+          >
+          <a
+            href="contact.html"
+            class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium nav-link"
+            >Contact</a
+          >
+          <div class="mt-4 pt-4 border-t border-gray-200">
+            <a
+              href="login.html"
+              class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
+              >Login</a
+            >
+            <a
+              href="register.html"
+              class="block ml-3 px-4 py-2 bg-blue-600 text-white rounded-md text-base font-medium hover:bg-blue-700 w-fit"
+              >Register</a
+            >
+          </div>
+        </div>
+      </div>
+    </header>
+    <section class="py-20 bg-gray-50" id="subscription">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">
+          Choose Your Subscription Plan
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Basic Plan -->
+          <div class="bg-white border border-gray-200 rounded-lg shadow p-8">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">Basic</h3>
+            <p class="text-3xl font-bold text-gray-900 mb-2">
+              Free <span class="text-sm font-normal">/month</span>
+            </p>
+            <p class="text-gray-600 mb-6">
+              Get started and explore creator tools.
+            </p>
+            <ul class="space-y-3 text-gray-600">
+              <li>✓ Create a public profile</li>
+              <li>✓ Upload up to 5 content items/month</li>
+              <li>✓ View community stats</li>
+              <li>✓ Basic support</li>
+            </ul>
+            <button
+              class="w-full mt-6 py-2 px-4 bg-gray-300 text-gray-700 font-semibold rounded cursor-not-allowed"
+              disabled
+            >
+              Current Plan
+            </button>
+          </div>
+
+          <!-- Premium Plan -->
+          <div
+            class="bg-white border-2 border-blue-500 rounded-lg shadow-lg p-8 relative"
+          >
+            <span
+              class="absolute top-4 right-4 bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-1 rounded"
+            >
+              Recommended
+            </span>
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">Premium</h3>
+            <p class="text-3xl font-bold text-gray-900 mb-2">
+              $15 <span class="text-sm font-normal">/month</span>
+            </p>
+            <p class="text-gray-600 mb-6">
+              Enhance visibility and access more tools.
+            </p>
+            <ul class="space-y-3 text-gray-600">
+              <li>✓ All Basic features</li>
+              <li>✓ Unlimited uploads</li>
+              <li>✓ Content analytics dashboard</li>
+              <li>✓ Priority verification</li>
+            </ul>
+            <button
+              id="upgradeBtn"
+              class="w-full mt-6 py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded subscription-btn"
+              data-plan="Premium"
+            >
+              Upgrade to Premium
+            </button>
+          </div>
+
+          <!-- Enterprise Plan -->
+          <div class="bg-white border border-gray-200 rounded-lg shadow p-8">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">Enterprise</h3>
+            <p class="text-3xl font-bold text-gray-900 mb-2">
+              $49 <span class="text-sm font-normal">/month</span>
+            </p>
+            <p class="text-gray-600 mb-6">
+              Ideal for agencies and content teams.
+            </p>
+            <ul class="space-y-3 text-gray-600">
+              <li>✓ All Premium features</li>
+              <li>✓ Team collaboration tools</li>
+              <li>✓ Personalized support</li>
+              <li>✓ Advanced monetization tracking</li>
+            </ul>
+            <button
+              class="w-full mt-6 py-2 px-4 bg-black text-white font-semibold rounded hover:bg-gray-900 subscription-btn"
+              data-plan="Enterprise"
+            >
+              Contact Sales
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Stripe JS -->
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <script>
+      function showPaymentOptions(plan) {
+        Swal.fire({
+          title: `💳 Subscribe to ${plan} Plan`,
+          html: `
+        <div class="space-y-4 text-left">
+          <button onclick="collectPaymentDetails('${plan}', 'Credit Card')" class="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 flex items-center justify-between">
+            <span>Pay with Credit Card</span><i class="ri-bank-card-line"></i>
+          </button>
+          <button onclick="collectPaymentDetails('${plan}', 'PayPal')" class="w-full px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 flex items-center justify-between">
+            <span>Pay with PayPal</span><i class="ri-paypal-line"></i>
+          </button>
+          <button onclick="collectPaymentDetails('${plan}', 'Mobile Money')" class="w-full px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center justify-between">
+            <span>Pay with Mobile Money</span><i class="ri-smartphone-line"></i>
+          </button>
+        </div>
+      `,
+          showConfirmButton: false,
+        });
+      }
+
+      function collectPaymentDetails(plan, method) {
+        let formHtml = "";
+        if (method === "Credit Card") {
+          formHtml = `
+        <input id="cardName" class="swal2-input" placeholder="Cardholder Name">
+        <input id="cardNumber" class="swal2-input" placeholder="Card Number (16 digits)">
+        <input id="expiry" class="swal2-input" placeholder="MM/YY">
+        <input id="cvv" class="swal2-input" placeholder="CVV (3 digits)">
+      `;
+        } else if (method === "PayPal") {
+          formHtml = `<input type="email" id="paypalEmail" class="swal2-input" placeholder="PayPal Email">`;
+        } else if (method === "Mobile Money") {
+          formHtml = `
+        <input id="mobileNumber" class="swal2-input" placeholder="Mobile Number">
+        <select id="carrier" class="swal2-input">
+          <option value="">Select Carrier</option>
+          <option value="orange">Orange</option>
+          <option value="africell">Africell</option>
+          <option value="qcell">QCell</option>
+        </select>
+      `;
+        }
+
+        Swal.fire({
+          title: `${method} Details`,
+          html: formHtml,
+          confirmButtonText: "Submit Payment",
+          showCancelButton: true,
+          focusConfirm: false,
+          preConfirm: () => {
+            if (method === "Credit Card") {
+              const name = document.getElementById("cardName").value.trim();
+              const number = document.getElementById("cardNumber").value.trim();
+              const expiry = document.getElementById("expiry").value.trim();
+              const cvv = document.getElementById("cvv").value.trim();
+              if (!name || !number || !expiry || !cvv)
+                return Swal.showValidationMessage(
+                  "Please fill all card fields"
+                );
+              if (!/^\d{16}$/.test(number))
+                return Swal.showValidationMessage("Invalid card number");
+              if (!/^\d{2}\/\d{2}$/.test(expiry))
+                return Swal.showValidationMessage("Expiry should be MM/YY");
+              if (!/^\d{3}$/.test(cvv))
+                return Swal.showValidationMessage("Invalid CVV");
+            } else if (method === "PayPal") {
+              const email = document.getElementById("paypalEmail").value.trim();
+              if (!email)
+                return Swal.showValidationMessage("Email is required");
+              if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+                return Swal.showValidationMessage("Invalid email format");
+            } else if (method === "Mobile Money") {
+              const number = document
+                .getElementById("mobileNumber")
+                .value.trim();
+              const carrier = document.getElementById("carrier").value;
+              if (!number || !carrier)
+                return Swal.showValidationMessage("Please fill all fields");
+              if (!/^\d{8,15}$/.test(number))
+                return Swal.showValidationMessage("Invalid phone number");
+            }
+          },
+        }).then((result) => {
+          if (result.isConfirmed) {
+            showProcessingAndConfirm(plan, method);
+          }
+        });
+      }
+
+      async function showProcessingAndConfirm(plan, method) {
+        Swal.fire({
+          title: `Processing ${method} Payment...`,
+          html: `<div class="mt-4 flex justify-center"><i class="ri-loader-4-line text-blue-600 text-4xl animate-spin"></i></div>`,
+          showConfirmButton: false,
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+        });
+
+        // Simulate API request (2 seconds delay or real fetch)
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+
+        // Example Stripe integration (test mode)
+        if (method === "Credit Card") {
+          try {
+            const response = await fetch("http://localhost:4242/create-checkout-session", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ plan }),
+            });
+            const session = await response.json();
+            if (session.id) {
+              const stripe = Stripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
+              await stripe.redirectToCheckout({ sessionId: session.id });
+            } else {
+              Swal.fire("Error", "Stripe session creation failed.", "error");
+            }
+            return;
+          } catch (err) {
+            Swal.fire("Error", "Network or server error.", "error");
+            return;
+          }
+        }
+
+        // Otherwise, simulate success for PayPal or Mobile Money
+        Swal.fire({
+          title: "✅ Payment Successful",
+          text: `${method} payment for the ${plan} plan was processed.`,
+          icon: "success",
+          confirmButtonText: "OK",
+          customClass: {
+            confirmButton:
+              "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700",
+          },
+        });
+      }
+
+      // Attach handlers
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".subscription-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const plan = btn.getAttribute("data-plan");
+            showPaymentOptions(plan);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

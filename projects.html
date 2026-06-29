@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Projects Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    rel="stylesheet"
+  />
+  <style>
+    /* Card hover overlay */
+    .card:hover .overlay {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .overlay {
+      transition: all 0.3s ease;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+    }
+    /* Platform badges colors */
+    .platform-facebook {
+      background-color: #1877f2;
+    }
+    .platform-instagram {
+      background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
+      color: white;
+    }
+    .platform-tiktok {
+      background-color: #010101;
+      color: #69c9d0;
+    }
+    .platform-twitter {
+      background-color: #1da1f2;
+    }
+    .platform-youtube {
+      background-color: #ff0000;
+    }
+    .platform-snapchat {
+      background-color: #fffc00;
+      color: #000;
+    }
+    .platform-linkedin {
+      background-color: #0077b5;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans min-h-screen flex flex-col">
+  <header class="max-w-7xl mx-auto p-6 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0">
+    <h1 class="text-4xl font-extrabold tracking-tight">My Projects</h1>
+    <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
+      <input
+        id="searchInput"
+        type="text"
+        placeholder="Search projects..."
+        class="flex-grow md:flex-grow-0 border rounded-md px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+        aria-label="Search projects"
+      />
+      <select
+        id="platformFilter"
+        class="border rounded-md px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+        aria-label="Filter by platform"
+      >
+        <option value="">All Platforms</option>
+        <option value="Facebook">Facebook</option>
+        <option value="Instagram">Instagram</option>
+        <option value="TikTok">TikTok</option>
+        <option value="Twitter">Twitter</option>
+        <option value="YouTube">YouTube</option>
+        <option value="Snapchat">Snapchat</option>
+        <option value="LinkedIn">LinkedIn</option>
+      </select>
+      <button
+        id="clearFilters"
+        class="hidden text-sm text-red-600 hover:underline ml-2"
+        aria-label="Clear filters"
+      >
+        Clear Filters
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-7xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="projectContainer" aria-live="polite">
+    <!-- Project cards inserted here -->
+  </main>
+
+  <footer class="text-center text-gray-500 text-sm p-4 border-t mt-auto">
+    &copy; 2025 My Portfolio
+  </footer>
+
+  <script>
+    // Helper: debounce to improve search input UX
+    function debounce(fn, delay) {
+      let timeout;
+      return (...args) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => fn(...args), delay);
+      };
+    }
+
+    // Social platform icons (fontawesome)
+    const platformIcons = {
+      Facebook: 'fab fa-facebook-f',
+      Instagram: 'fab fa-instagram',
+      TikTok: 'fab fa-tiktok',
+      Twitter: 'fab fa-twitter',
+      YouTube: 'fab fa-youtube',
+      Snapchat: 'fab fa-snapchat-ghost',
+      LinkedIn: 'fab fa-linkedin-in'
+    };
+
+    // Projects data
+    let projects = [
+      {
+        title: "Digital Rights in Sierra Leone",
+        platform: "LinkedIn",
+        views: 1840,
+        likes: 201,
+        date: "2025-06-24",
+        description: "An analysis of legal protections for digital creators.",
+        image: "https://source.unsplash.com/600x400/?legal",
+      },
+      {
+        title: "TikTok Growth Guide",
+        platform: "TikTok",
+        views: 9213,
+        likes: 1302,
+        date: "2025-05-14",
+        description: "Tutorials on boosting followers.",
+        image: "https://source.unsplash.com/600x400/?tiktok",
+      },
+      {
+        title: "Smart Desk & Smart Board UI",
+        platform: "Instagram",
+        views: 605,
+        likes: 75,
+        date: "2025-06-01",
+        description: "Prototype for futuristic digital learning.",
+        image: "https://source.unsplash.com/600x400/?ui,design",
+      },
+      {
+        title: "Gemini AI Clone",
+        platform: "Facebook",
+        views: 431,
+        likes: 53,
+        date: "2025-05-12",
+        description: "Custom AI assistant clone.",
+        image: "https://source.unsplash.com/600x400/?ai",
+      },
+      {
+        title: "Django Girls Blog Site",
+        platform: "Twitter",
+        views: 980,
+        likes: 106,
+        date: "2025-04-18",
+        description: "Blog platform built with Django.",
+        image: "https://source.unsplash.com/600x400/?code",
+      },
+    ];
+
+    const container = document.getElementById("projectContainer");
+    const searchInput = document.getElementById("searchInput");
+    const platformFilter = document.getElementById("platformFilter");
+    const clearFiltersBtn = document.getElementById("clearFilters");
+
+    // Render platform badge with icon and color
+    function renderPlatformBadge(platform) {
+      const className = `platform-${platform.toLowerCase()}`;
+      const iconClass = platformIcons[platform] || 'fas fa-globe';
+      return `
+        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-white text-xs font-semibold ${className}">
+          <i class="${iconClass}"></i> ${platform}
+        </span>
+      `;
+    }
+
+    // Render projects with cards and overlay
+    function renderProjects() {
+      const search = searchInput.value.toLowerCase();
+      const filter = platformFilter.value;
+
+      // Show/hide clear filters button
+      if (filter) clearFiltersBtn.classList.remove("hidden");
+      else clearFiltersBtn.classList.add("hidden");
+
+      container.innerHTML = "";
+
+      const filteredProjects = projects.filter(proj => {
+        const matchesSearch = proj.title.toLowerCase().includes(search) || proj.description.toLowerCase().includes(search);
+        const matchesFilter = !filter || proj.platform === filter;
+        return matchesSearch && matchesFilter;
+      });
+
+      if (filteredProjects.length === 0) {
+        container.innerHTML = `<p class="text-center col-span-full text-gray-500 text-lg mt-10">No projects found.</p>`;
+        return;
+      }
+
+      filteredProjects.forEach((proj, index) => {
+        const card = document.createElement("article");
+        card.className = "card relative rounded-lg overflow-hidden shadow hover:shadow-lg transition cursor-pointer bg-white";
+
+        card.innerHTML = `
+          <img src="${proj.image}" alt="${proj.title}" class="w-full h-48 object-cover transition-transform duration-300 hover:scale-105" />
+          <div class="p-4">
+            <h2 class="text-xl font-semibold mb-1">${proj.title}</h2>
+            ${renderPlatformBadge(proj.platform)}
+            <p class="mt-2 text-gray-600 text-sm line-clamp-2">${proj.description}</p>
+            <div class="flex items-center gap-4 mt-4 text-gray-500 text-xs select-none">
+              <span><i class="fas fa-eye mr-1"></i>${proj.views.toLocaleString()}</span>
+              <span><i class="fas fa-heart mr-1 text-red-500"></i>${proj.likes.toLocaleString()}</span>
+            </div>
+          </div>
+
+          <div
+            class="overlay absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 invisible hover:opacity-100 hover:visible transition-opacity duration-300"
+          >
+            <button
+              aria-label="View details for ${proj.title}"
+              class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded shadow"
+              onclick="viewDetails(${projects.indexOf(proj)})"
+            >
+              View Details
+            </button>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    // Navigate to details page with index param
+    function viewDetails(index) {
+      window.location.href = `project-details.html?index=${index}`;
+    }
+
+    // Like button animation & update (Bonus: could extend with persistence)
+    function likeProject(index) {
+      projects[index].likes++;
+      renderProjects();
+    }
+
+    // Filter clear handler
+    clearFiltersBtn.addEventListener("click", () => {
+      platformFilter.value = "";
+      clearFiltersBtn.classList.add("hidden");
+      renderProjects();
+    });
+
+    // Debounced render for search input
+    searchInput.addEventListener("input", debounce(renderProjects, 300));
+    platformFilter.addEventListener("change", renderProjects);
+
+    // Initial render
+    renderProjects();
+  </script>
+</body>
+</html>

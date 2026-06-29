@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Profile</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    .gradient-bg {
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+    .glow-border {
+      border: 2px solid transparent;
+      background-image: linear-gradient(white, white), radial-gradient(circle at top left, #00f2fe, #4facfe);
+      background-origin: border-box;
+      background-clip: content-box, border-box;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+  <div class="max-w-6xl mx-auto p-6 space-y-12">
+    <!-- Profile Section -->
+    <section class="gradient-bg text-white rounded-lg shadow-lg p-8 flex flex-col md:flex-row items-center gap-8">
+      <img src="https://source.unsplash.com/100x100/?portrait" alt="User" class="w-28 h-28 rounded-full border-4 border-white shadow-md object-cover" />
+      <div>
+        <h1 class="text-4xl font-bold mb-1">Shadrach Hingston</h1>
+        <p class="text-gray-200 text-lg">Software Engineer & Multimedia Creator</p>
+        <div class="mt-4 space-y-1 text-sm">
+          <p><i class="fa fa-envelope mr-2"></i> shadrach@example.com</p>
+          <p><i class="fa fa-location-dot mr-2"></i> Freetown, Sierra Leone</p>
+          <p><i class="fa fa-globe mr-2"></i> www.shadrachhingston.com</p>
+        </div>
+        <div class="mt-4 flex gap-4">
+          <a href="#" class="text-white hover:text-sky-300"><i class="fab fa-linkedin fa-lg"></i></a>
+          <a href="#" class="text-white hover:text-sky-300"><i class="fab fa-github fa-lg"></i></a>
+          <a href="#" class="text-white hover:text-sky-300"><i class="fab fa-twitter fa-lg"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section>
+      <h2 class="text-2xl font-semibold mb-6 border-b pb-2">Projects by Shadrach</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projectList">
+        <!-- Project Cards will be injected here -->
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const projects = [
+      {
+        title: "Gemini AI Clone",
+        platform: "Facebook",
+        date: "2025-05-12",
+        description: "Custom AI assistant clone.",
+        image: "https://source.unsplash.com/featured/?ai",
+        link: "project-details.html?index=3"
+      },
+      {
+        title: "Smart Desk & Smart Board UI",
+        platform: "Instagram",
+        date: "2025-06-01",
+        description: "Prototype for futuristic digital learning.",
+        image: "https://source.unsplash.com/featured/?ui,design",
+        link: "project-details.html?index=2"
+      },
+      {
+        title: "Digital Rights in Sierra Leone",
+        platform: "LinkedIn",
+        date: "2025-06-24",
+        description: "Legal protections for digital creators.",
+        image: "https://source.unsplash.com/featured/?blog,law",
+        link: "project-details.html?index=0"
+      }
+    ];
+
+    const container = document.getElementById("projectList");
+    projects.forEach(project => {
+      const card = document.createElement("div");
+      card.className = "bg-white rounded-lg shadow-md overflow-hidden transform transition card-hover glow-border";
+      card.innerHTML = `
+        <img src="${project.image}" alt="${project.title}" class="w-full h-40 object-cover">
+        <div class="p-4">
+          <h3 class="text-xl font-bold">${project.title}</h3>
+          <p class="text-sm text-gray-600 mt-1">${project.description}</p>
+          <p class="text-sm text-gray-500 mt-2">Platform: ${project.platform} | Date: ${project.date}</p>
+          <button class="mt-3 inline-block text-sm text-blue-600 hover:underline" onclick="viewProject('${project.link}', '${project.title}')">View Details</button>
+        </div>`;
+      container.appendChild(card);
+    });
+
+    function viewProject(url, title) {
+      Swal.fire({
+        title: `Open Project?`,
+        text: `Do you want to view "${title}"?`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, view it',
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = url;
+        }
+      });
+    }
+  </script>
+</body>
+</html>

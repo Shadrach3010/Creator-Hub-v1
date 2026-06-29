@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Details</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans p-6">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+    <!-- Main Content -->
+    <main class="md:col-span-3 space-y-6" id="projectDetails"></main>
+
+    <!-- Sidebar -->
+    <aside class="md:col-span-1 space-y-6">
+      <!-- Related Projects -->
+      <section>
+        <h2 class="text-xl font-bold mb-2">Related Projects</h2>
+        <ul id="relatedProjects" class="space-y-2 text-sm text-blue-600 underline cursor-pointer"></ul>
+      </section>
+
+      <!-- Categories -->
+      <section>
+        <h2 class="text-xl font-bold mb-2">Categories</h2>
+        <ul id="categoryList" class="space-y-1 text-sm"></ul>
+      </section>
+
+      <!-- Tags -->
+      <section>
+        <h2 class="text-xl font-bold mb-2">Tags</h2>
+        <div id="tagList" class="flex flex-wrap gap-2 text-xs"></div>
+      </section>
+    </aside>
+  </div>
+
+  <script>
+    const projects = [
+      {
+        title: "Digital Rights in Sierra Leone",
+        platform: "LinkedIn",
+        views: 1840,
+        likes: 201,
+        date: "2025-06-24",
+        category: "Blog",
+        tags: ["blog", "law", "rights"],
+        description: "An analysis of legal protections for digital creators.",
+        image: "https://source.unsplash.com/1200x600/?legal",
+      },
+      {
+        title: "TikTok Growth Guide",
+        platform: "TikTok",
+        views: 9213,
+        likes: 1302,
+        date: "2025-05-14",
+        category: "Social Media",
+        tags: ["tiktok", "growth", "social"],
+        description: "Tutorials on boosting followers.",
+        image: "https://source.unsplash.com/1200x600/?tiktok",
+      },
+      {
+        title: "Smart Desk & Smart Board UI",
+        platform: "Instagram",
+        views: 605,
+        likes: 75,
+        date: "2025-06-01",
+        category: "UI Design",
+        tags: ["ui", "figma", "design"],
+        description: "Prototype for futuristic digital learning.",
+        image: "https://source.unsplash.com/1200x600/?ui,design",
+      },
+      {
+        title: "Gemini AI Clone",
+        platform: "Facebook",
+        views: 431,
+        likes: 53,
+        date: "2025-05-12",
+        category: "AI Projects",
+        tags: ["ai", "assistant", "clone"],
+        description: "Custom AI assistant clone.",
+        image: "https://source.unsplash.com/1200x600/?ai",
+      },
+      {
+        title: "Django Girls Blog Site",
+        platform: "Twitter",
+        views: 980,
+        likes: 106,
+        date: "2025-04-18",
+        category: "Web Development",
+        tags: ["django", "blog", "code"],
+        description: "Blog platform built with Django.",
+        image: "https://source.unsplash.com/1200x600/?code",
+      },
+    ];
+
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    function renderProjectDetails(index) {
+      const container = document.getElementById("projectDetails");
+      const related = document.getElementById("relatedProjects");
+      const categoryList = document.getElementById("categoryList");
+      const tagList = document.getElementById("tagList");
+      const project = projects[index];
+
+      if (!project) {
+        container.innerHTML = "<p class='text-red-600 text-xl'>Project not found.</p>";
+        return;
+      }
+
+      project.views++;
+
+      container.innerHTML = `
+        <h1 class="text-4xl font-bold">${project.title}</h1>
+        <img src="${project.image}" alt="${project.title}" class="w-full h-auto rounded-lg shadow my-4" />
+        <p class="text-gray-500"><strong>Platform:</strong> ${project.platform} &nbsp; • &nbsp; 
+        <strong>Date:</strong> ${project.date}</p>
+        <p class="text-gray-600 mt-2"><strong>Views:</strong> ${project.views.toLocaleString()} &nbsp; 
+        <strong>Likes:</strong> ${project.likes.toLocaleString()}</p>
+        <p class="mt-4 text-lg leading-relaxed">${project.description}</p>
+        <div class="mt-6 flex gap-4">
+          <button class="px-5 py-2 bg-red-600 text-white rounded hover:bg-red-700" onclick="likeProject(${index})">
+            ❤️ Like
+          </button>
+          <button class="px-5 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" onclick="shareProject('${project.title}')">
+            🔗 Share
+          </button>
+        </div>
+      `;
+
+      // Related projects: same category or tag
+      related.innerHTML = "";
+      projects.forEach((p, i) => {
+        if (i !== parseInt(index) && (p.category === project.category || p.tags.some(t => project.tags.includes(t)))) {
+          const li = document.createElement("li");
+          li.innerHTML = `<a href="project-details.html?index=${i}">${p.title}</a>`;
+          related.appendChild(li);
+        }
+      });
+
+      // Unique categories
+      const uniqueCategories = [...new Set(projects.map(p => p.category))];
+      categoryList.innerHTML = uniqueCategories.map(cat => `<li><a href="projects.html?category=${cat}" class="text-blue-600 hover:underline">${cat}</a></li>`).join("");
+
+      // Tags for current project
+      tagList.innerHTML = project.tags.map(tag => `<a href="projects.html?tag=${tag}" class="px-3 py-1 bg-gray-200 text-gray-800 rounded-full">#${tag}</a>`).join(" ");
+    }
+
+    function likeProject(index) {
+      projects[index].likes++;
+      renderProjectDetails(index);
+    }
+
+    function shareProject(title) {
+      const url = window.location.href;
+      navigator.clipboard.writeText(url).then(() => {
+        Swal.fire({
+          title: "Link Copied!",
+          text: `\"${title}\" link copied to clipboard.`,
+          icon: "success",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      });
+    }
+
+    const index = getQueryParam("index");
+    renderProjectDetails(index);
+  </script>
+</body>
+</html>
